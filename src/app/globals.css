@@ -40,17 +40,29 @@ button { font: inherit; }
 ::selection { background: var(--cyan); color: var(--background); }
 :focus-visible { outline: 2px solid var(--cyan); outline-offset: 6px; }
 .container { width: min(1240px, calc(100% - 96px)); margin-inline: auto; }
-.site-header { border-bottom: 1px solid var(--border); background: var(--background); position: relative; z-index: 20; }
+.site-header { border-bottom: 1px solid var(--border); background: rgb(11 14 20 / 96%); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 20; }
 .header-inner { min-height: 96px; display: flex; align-items: center; justify-content: space-between; }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 900; font-size: 22px; line-height: 1; letter-spacing: 1.5px; }
 .brand img { width: 66px; height: 66px; object-fit: contain; }
 .brand-subtitle { display: block; font-size: 10px; letter-spacing: 5px; margin-top: 7px; color: var(--silver); }
+.brand-line { position: relative; }
+.brand-glitch .brand-line::before, .brand-glitch .brand-line::after { content: attr(data-text); position: absolute; inset: 0; pointer-events: none; opacity: 0; clip-path: inset(25% 0 50%); animation: brand-glitch 9s steps(1, end) infinite; }
+.brand-glitch .brand-line::before { color: var(--cyan); }
+.brand-glitch .brand-line::after { color: white; animation-direction: reverse; }
+@keyframes brand-glitch {
+  0%, 92%, 94%, 96%, 100% { opacity: 0; transform: none; }
+  92.5%, 95% { opacity: .7; transform: translateX(1.5px); clip-path: inset(20% 0 55%); }
+  93%, 95.5% { opacity: .5; transform: translateX(-1px); clip-path: inset(65% 0 10%); }
+}
+@media (prefers-reduced-motion: reduce) { .brand-glitch .brand-line::before, .brand-glitch .brand-line::after { animation: none; display: none; } }
 .navigation { display: flex; align-items: center; gap: 38px; font-size: 13px; font-weight: 600; }
 .navigation > a { padding-block: 14px; color: var(--muted); }
 .navigation > a:hover, .navigation > a[aria-current="page"] { color: var(--foreground); }
 .navigation > a[aria-current="page"]:not(.sign-in) { box-shadow: 0 2px 0 var(--cyan); }
 .navigation .sign-in { display: flex; align-items: center; gap: 22px; margin-left: 18px; padding: 12px 20px; border: 1px solid #46505e; color: var(--foreground); }
 .navigation .sign-in:hover { border-color: var(--cyan); }
+.account-label { display: block; max-width: clamp(88px, 12vw, 160px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.navigation .sign-in svg { flex-shrink: 0; }
 .menu-toggle { display: none; background: transparent; border: 1px solid var(--border); color: var(--foreground); padding: 10px; cursor: pointer; }
 .skip-link { position: fixed; top: -100px; left: 20px; padding: 14px; background: var(--cyan); color: var(--background); z-index: 100; }
 .skip-link:focus { top: 15px; }
@@ -106,7 +118,6 @@ h2 { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -1.3p
 .tournament-card { display: flex; flex-direction: column; background: #121822; border: 1px solid var(--border); overflow: hidden; }
 .tournament-art { width: 100%; aspect-ratio: 16 / 9; flex-shrink: 0; position: relative; overflow: hidden; background: var(--surface); }
 .tournament-image { object-fit: cover; object-position: center; }
-.event-tag { position: absolute; top: 18px; left: 20px; color: #d5e9ee; font-size: 8px; letter-spacing: 1px; border: 1px solid #547c87; padding: 5px 7px; z-index: 2; }
 .card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
 .card-status { display: flex; align-items: center; gap: 7px; font-size: 10px; color: var(--muted); margin-bottom: 12px; }
 .card-body h3 { font-size: 21px; font-weight: 700; letter-spacing: -.5px; margin-bottom: 18px; }
@@ -234,7 +245,6 @@ h2 { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -1.3p
 .back-link:hover { color: var(--cyan); }
 .detail-hero { display: grid; grid-template-columns: 1.05fr 1fr; border: 1px solid var(--border); background: #121822; }
 .detail-art { align-self: center; }
-.detail-art .event-tag { left: 32px; top: 26px; }
 .detail-intro { padding: 40px; align-self: center; }
 .detail-intro h1 { font-weight: 900; font-size: clamp(34px, 4vw, 50px); letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 20px; }
 .detail-intro > p { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 24px; }
@@ -302,7 +312,6 @@ h2 { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -1.3p
   .filter-buttons { gap: 7px; }
   .filter-buttons button { flex-grow: 1; font-size: 10px; padding-inline: 10px; }
   .detail-hero { grid-template-columns: 1fr; }
-  .detail-art .event-tag { left: 20px; top: 18px; }
   .detail-intro { padding: 28px 24px; }
   .event-facts { grid-template-columns: 1fr; padding: 24px; gap: 20px; }
   .registration-notice { padding: 22px; margin-bottom: 44px; }

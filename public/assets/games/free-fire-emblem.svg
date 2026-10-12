@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <title>Original orange survival flame emblem</title>
+  <defs><linearGradient id="flame" x2="0" y2="1"><stop stop-color="#fff1b0"/><stop offset=".45" stop-color="#ffb13b"/><stop offset="1" stop-color="#ed4e35"/></linearGradient></defs>
+  <path d="M49 8c4 22-18 24-12 40 8-5 13-12 15-21 8 10 5 18 9 22l9-17c2 12 14 19 13 32-1 15-14 24-34 24S15 79 15 64c0-15 13-23 15-36 6 8 7 12 8 15C33 25 47 22 49 8z" fill="url(#flame)"/>
+  <path d="M49 45c3 12-9 15-8 25 6-2 10-6 12-12 8 7 11 14 7 20-5 8-22 7-27-1-6-10 5-17 16-32z" fill="#fff2ba"/>
+  <path d="M17 17l-3 10m64-10 4 9M9 47l-4 7m84-6 2 6" stroke="#ffae48" stroke-width="3" stroke-linecap="round"/>
+</svg>

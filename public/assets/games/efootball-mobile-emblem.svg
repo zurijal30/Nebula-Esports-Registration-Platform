@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <title>Original electric football emblem</title>
+  <defs><linearGradient id="ball" x2="1" y2="1"><stop stop-color="#f3ffe6"/><stop offset="1" stop-color="#83d6db"/></linearGradient></defs>
+  <path d="M10 30h19M6 43h16M12 57h12" stroke="#bcf96a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M18 72c22 17 50 15 70-7" fill="none" stroke="#6cc4fb" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="54" cy="43" r="29" fill="url(#ball)" stroke="#d7ffe2" stroke-width="2"/>
+  <path d="M54 30l13 10-5 16H46l-5-16z" fill="#16383d"/>
+  <path d="M54 14v16m-23-4 10 14m26 0 11-14M46 56l-9 10m25-10 9 10M25 45l16-5m26 0 16 5" fill="none" stroke="#29666d" stroke-width="2"/>
+  <path d="M30 59l7 7-1 1m37-1 5-8" stroke="#29666d" stroke-width="5"/>
+</svg>

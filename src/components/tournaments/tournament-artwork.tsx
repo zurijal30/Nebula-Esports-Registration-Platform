@@ -29,7 +29,6 @@ export function TournamentArtwork({ tournament, large = false }: { tournament: T
           if (image.src !== defaultTournamentImage.src) setFailedSource(image.src);
         }}
       />
-      <span className="event-tag">NEBULA EVENT</span>
     </div>
   );
 }

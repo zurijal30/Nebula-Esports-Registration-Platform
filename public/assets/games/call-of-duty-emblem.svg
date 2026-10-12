@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <title>Original tactical identification emblem</title>
+  <defs><linearGradient id="steel" x2="1" y2="1"><stop stop-color="#f0f5e5"/><stop offset="1" stop-color="#80917b"/></linearGradient></defs>
+  <path d="M40 26C22 13 30 7 43 8c18 1 19 15 8 21" fill="none" stroke="#b7c7ab" stroke-width="3" stroke-dasharray="2 4" stroke-linecap="round"/>
+  <path d="M29 27h26a8 8 0 018 8v42a8 8 0 01-8 8H29a8 8 0 01-8-8V35a8 8 0 018-8z" transform="rotate(-15 42 55)" fill="#18241e" stroke="#8ca086" stroke-width="3"/>
+  <rect x="36" y="25" width="38" height="57" rx="8" fill="#24332c" stroke="url(#steel)" stroke-width="4"/>
+  <circle cx="55" cy="34" r="3" fill="#c6d7b9"/>
+  <path d="M44 53l11-8 11 8m-22 10 11-8 11 8" fill="none" stroke="url(#steel)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M44 73h22" stroke="#9bb28d" stroke-width="3"/>
+</svg>

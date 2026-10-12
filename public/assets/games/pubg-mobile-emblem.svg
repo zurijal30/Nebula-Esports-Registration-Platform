@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <title>Original battle royale supply drop emblem</title>
+  <defs><linearGradient id="gold" x2="0" y2="1"><stop stop-color="#ffeab5"/><stop offset="1" stop-color="#bd8338"/></linearGradient></defs>
+  <path d="M12 38a36 30 0 0172 0l-12-7-12 7-12-7-12 7-12-7z" fill="#29342a" stroke="url(#gold)" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M24 31c1-10 9-20 24-23 14 3 23 13 24 23M36 38c-1-13 5-25 12-30 7 5 13 17 12 30M14 39l22 25m46-25L60 64M36 38l8 26m16-26-8 26" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <path d="M31 61h34v26H31z" fill="#3a3425" stroke="url(#gold)" stroke-width="3"/>
+  <path d="M31 69h34M40 61v26m16-26v26" stroke="#c5a35d" stroke-width="3"/>
+  <path d="M47 73h3v7h-3z" fill="#ffeab5"/>
+</svg>

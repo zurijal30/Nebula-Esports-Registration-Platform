@@ -85,7 +85,7 @@ export function GameTicker() {
         <div ref={trackRef} className="game-ticker-track">
           {[false, true].map(duplicate => <ul className={`game-ticker-group${duplicate ? " game-ticker-copy" : ""}`} key={String(duplicate)} aria-hidden={duplicate ? true : undefined}>
             {supportedGames.map(game => <li className="ticker-game" key={game.slug} data-platform={game.platform}>
-              <span className="ticker-logo" aria-hidden="true">{game.logo ? <Image src={game.logo.src} alt="" width={game.logo.width} height={game.logo.height} loading="eager" unoptimized /> : <Gamepad2 size={28} strokeWidth={1.4} className="ticker-fallback" />}</span>
+              <span className="ticker-logo" aria-hidden="true" data-artwork={game.logo?.kind} title={game.logo?.kind === "custom" ? "Original game-themed artwork by Nebula Esports" : undefined}>{game.logo ? <Image src={game.logo.src} alt="" width={game.logo.width} height={game.logo.height} loading="eager" unoptimized /> : <Gamepad2 size={28} strokeWidth={1.4} className="ticker-fallback" />}</span>
               <span className="ticker-game-copy"><span className="ticker-game-name">{game.name}</span><span className="ticker-platform">{game.platform}</span></span>
             </li>)}
           </ul>)}

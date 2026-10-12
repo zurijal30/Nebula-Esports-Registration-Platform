@@ -7,13 +7,14 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Brand } from "./brand";
 import { navigation } from "@/lib/site";
 
-export function Header({ signedIn = false }: { signedIn?: boolean }) {
+export function Header({ signedIn = false, displayName }: { signedIn?: boolean; displayName?: string | null }) {
   const pathname = usePathname();
   // A route change starts with a closed disclosure, including browser navigation.
-  return <HeaderNavigation key={pathname} pathname={pathname} signedIn={signedIn} />;
+  return <HeaderNavigation key={pathname} pathname={pathname} signedIn={signedIn} displayName={displayName} />;
 }
 
-function HeaderNavigation({ pathname, signedIn }: { pathname: string; signedIn: boolean }) {
+function HeaderNavigation({ pathname, signedIn, displayName }: { pathname: string; signedIn: boolean; displayName?: string | null }) {
+  const accountLabel = signedIn ? displayName?.trim() || "Account" : "Sign In";
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
   const header = useRef<HTMLElement>(null);
@@ -46,5 +47,5 @@ function HeaderNavigation({ pathname, signedIn }: { pathname: string; signedIn: 
     };
   }, [open]);
 
-  return <header ref={header} className="site-header" onBlur={event => { if (open && event.relatedTarget instanceof Node && !event.currentTarget.contains(event.relatedTarget)) setOpen(false); }}><div className="container header-inner"><Brand /><button type="button" ref={toggle} className="menu-toggle" aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} aria-controls="primary-navigation" onClick={() => setOpen(current => !current)}>{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button><nav id="primary-navigation" aria-label="Main navigation" className={`navigation ${open ? "is-open" : ""}`}>{navigation.map(item => <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} onClick={() => setOpen(false)}>{item.label}</Link>)}<Link className="sign-in" href={signedIn ? "/dashboard" : "/sign-in"} aria-current={pathname === (signedIn ? "/dashboard" : "/sign-in") ? "page" : undefined} onClick={() => setOpen(false)}>{signedIn ? "My Account" : "Sign In"} <ArrowUpRight size={16} aria-hidden="true" /></Link></nav></div></header>;
+  return <header ref={header} className="site-header" onBlur={event => { if (open && event.relatedTarget instanceof Node && !event.currentTarget.contains(event.relatedTarget)) setOpen(false); }}><div className="container header-inner"><Brand glitch /><button type="button" ref={toggle} className="menu-toggle" aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} aria-controls="primary-navigation" onClick={() => setOpen(current => !current)}>{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button><nav id="primary-navigation" aria-label="Main navigation" className={`navigation ${open ? "is-open" : ""}`}>{navigation.map(item => <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} onClick={() => setOpen(false)}>{item.label}</Link>)}<Link className="sign-in" href={signedIn ? "/dashboard" : "/sign-in"} aria-current={pathname === (signedIn ? "/dashboard" : "/sign-in") ? "page" : undefined} onClick={() => setOpen(false)} title={signedIn ? accountLabel : undefined}><span className="account-label">{accountLabel}</span> <ArrowUpRight size={16} aria-hidden="true" /></Link></nav></div></header>;
 }

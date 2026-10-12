@@ -12,5 +12,5 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const account = await getCurrentAccount();
-  return <html lang="en" data-scroll-behavior="smooth"><body><a className="skip-link" href="#main-content">Skip to content</a><Header signedIn={Boolean(account.user)} /><main id="main-content">{children}</main><Footer /><LiveEventRefresh/></body></html>;
+  return <html lang="en" data-scroll-behavior="smooth"><body><a className="skip-link" href="#main-content">Skip to content</a><Header signedIn={Boolean(account.user)} displayName={account.user ? account.profile?.display_name : null} /><main id="main-content">{children}</main><Footer /><LiveEventRefresh/></body></html>;
 }

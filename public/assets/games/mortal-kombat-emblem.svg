@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <title>Original amber martial arts blades emblem</title>
+  <defs><linearGradient id="gold" x2="1" y2="1"><stop stop-color="#fff0b8"/><stop offset="1" stop-color="#c87332"/></linearGradient></defs>
+  <path d="M48 5l7 15 16-6 1 17 18 3-9 15 9 16-18 2-2 17-16-6-6 13-7-13-16 6-1-17-18-2 9-16-9-15 18-3 2-17 16 6z" fill="#602d22" opacity=".6"/>
+  <path d="M17 17l24 8 23 36-6 7-35-25zM79 17l-24 8-23 36 6 7 35-25z" fill="url(#gold)" stroke="#ffe1a3" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M31 58l12 12m22-12L53 70M39 65L23 81m34-16 16 16" stroke="#d79c4a" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="19" cy="85" r="5" fill="none" stroke="#ffdf93" stroke-width="3"/>
+  <circle cx="77" cy="85" r="5" fill="none" stroke="#ffdf93" stroke-width="3"/>
+</svg>

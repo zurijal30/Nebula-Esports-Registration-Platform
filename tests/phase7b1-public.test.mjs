@@ -23,13 +23,26 @@ async function component(path,replacements={}){
 }
 const ticker=await component('../src/components/tournaments/game-ticker.tsx',{'next/image':stub,'@/data/supported-games':new URL('../src/data/supported-games.ts',import.meta.url).href});
 const empty=await component('../src/components/tournaments/tournament-empty-state.tsx');
+test('shared card and detail artwork retain supplied banners without the event overlay',async()=>{
+  const artwork=await component('../src/components/tournaments/tournament-artwork.tsx',{'next/image':stub,'@/lib/tournament-image':new URL('../src/lib/tournament-image.ts',import.meta.url).href});
+  const {TournamentArtwork}=await import(artwork);
+  for(const large of [false,true]){
+    const html=renderToStaticMarkup(React.createElement(TournamentArtwork,{large,tournament:{title:'Published Event',displayImage:{src:'/images/events/default-banner.svg',alt:'Supplied banner'}}}));
+    assert.ok(html.includes('alt="Supplied banner"'));assert.ok(html.includes('/images/events/default-banner.svg'));
+    assert.doesNotMatch(html,/NEBULA EVENT|event-tag/);
+  }
+});
 const heroAsset=moduleUrl('export default "/mock-hero.png";');
 const replacements={'next/image':stub,'next/link':stub,'next/navigation':stub,'@/lib/tournaments/live':stub,'@/lib/server-time':stub,'@/components/tournaments/tournament-card':stub,'@/components/tournaments/tournament-directory':stub,'@/components/ui/page-intro':stub,'@/components/ui/action-link':stub,'@/components/tournaments/game-ticker':ticker,'@/components/tournaments/tournament-empty-state':empty,'@/lib/tournament-status':new URL('../src/lib/tournament-status.ts',import.meta.url).href};
-test('catalog has all requested platforms/games, local authentic assets and edition-neutral FC',async()=>{
+test('catalog has requested platforms, local official/original assets and edition-neutral FC',async()=>{
   assert.deepEqual(supportedGames.filter(g=>g.platform==='PC').map(g=>g.name),['VALORANT','Dota 2','Call of Duty','League of Legends']);
   assert.deepEqual(supportedGames.filter(g=>g.platform==='Mobile').map(g=>g.name),['PUBG Mobile','Free Fire','Mobile Legends: Bang Bang','Call of Duty: Mobile','eFootball Mobile']);
   assert.deepEqual(supportedGames.filter(g=>g.platform==='Console').map(g=>g.name),['EA Sports FC','Mortal Kombat','Tekken','F1']);
   assert.equal(new Set(supportedGames.map(g=>g.slug)).size,supportedGames.length);
+  assert.equal(supportedGames.filter(g=>g.logo?.kind==='official').length,3);
+  assert.equal(supportedGames.filter(g=>g.logo?.kind==='provided').length,10);
+  assert.equal(supportedGames.filter(g=>g.logo?.kind==='custom').length,0);
+  assert.ok(supportedGames.every(g=>g.logo));
   for(const game of supportedGames.filter(g=>g.logo)){
     assert.match(game.logo.src,/^\/assets\/games\/[a-z0-9-]+\.(svg|webp|png)$/);
     const path=new URL('../public'+game.logo.src,import.meta.url);assert.ok((await stat(path)).size>0);
@@ -38,12 +51,15 @@ test('catalog has all requested platforms/games, local authentic assets and edit
     if(metadata.format==='svg')assert.doesNotMatch(bytes.toString(),/<script|<foreignObject|(?:href|src)=["'](?:https?:|\/\/)/i);
   }
 });
-test('actual ticker has identical groups, one accessible list and neutral fallbacks',async()=>{
+test('actual ticker has identical groups, one accessible list and no controller placeholders',async()=>{
   const {GameTicker}=await import(ticker);const html=renderToStaticMarkup(React.createElement(GameTicker));
   assert.equal((html.match(/class="ticker-game"/g)||[]).length,26);
   assert.ok(html.includes('class="game-ticker-group game-ticker-copy" aria-hidden="true"'));
   assert.ok(html.includes('tabindex="0"'));assert.ok(html.includes('Supported games'));assert.ok(html.includes('scrolls continuously'));assert.ok(!html.includes('pause scrolling'));
-  assert.equal((html.match(/class="[^"]*\bticker-fallback\b[^"]*"/g)||[]).length,18);assert.ok(!html.includes('https://'));
+  assert.equal((html.match(/class="[^"]*\bticker-fallback\b[^"]*"/g)||[]).length,0);
+  assert.equal((html.match(/data-artwork="custom"/g)||[]).length,0);
+  assert.equal((html.match(/data-artwork="provided"/g)||[]).length,20);
+  assert.equal((html.match(/<img /g)||[]).length,26);assert.ok(!html.includes('https://'));
 });
 test('actual public home/discovery render published data only, empty lists and errors without mock substitutes',async()=>{
   const Home=(await import(await component('../src/app/page.tsx',{...replacements,'../../assets/nebula-web-banner.png':heroAsset}))).default;
