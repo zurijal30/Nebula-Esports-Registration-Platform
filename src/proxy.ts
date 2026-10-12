@@ -30,4 +30,4 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 
-export const config = { matcher: ["/((?!_next/static|_next/image|favicon.ico|images/).*)"] };
+export const config = { matcher: ["/((?!_next/static|_next/image|favicon\\.ico$|icon[12]\\.png$|apple-icon\\.png$|images/|assets/games/).*)"] };
