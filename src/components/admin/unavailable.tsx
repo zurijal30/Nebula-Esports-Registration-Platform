@@ -1,0 +1,1 @@
+export function AdminUnavailable(){return <p className="form-message form-error" role="alert">Management data could not be loaded. Please try again or check that the Phase 5 migration and Storage setup have been applied.</p>;}

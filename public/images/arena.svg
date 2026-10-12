@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="700" viewBox="0 0 800 700" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="100" y1="0" x2="650" y2="700" gradientUnits="userSpaceOnUse"><stop stop-color="#0b0e14"/><stop offset=".6" stop-color="#112631"/><stop offset="1" stop-color="#0b111a"/></linearGradient>
+    <linearGradient id="beam" x1="400" y1="0" x2="400" y2="500" gradientUnits="userSpaceOnUse"><stop stop-color="#15bbd0" stop-opacity=".03"/><stop offset="1" stop-color="#15bbd0" stop-opacity=".2"/></linearGradient>
+    <linearGradient id="stage" x1="200" y1="410" x2="650" y2="550" gradientUnits="userSpaceOnUse"><stop stop-color="#142c39"/><stop offset="1" stop-color="#245363"/></linearGradient>
+    <radialGradient id="light"><stop stop-color="#15bbd0" stop-opacity=".18"/><stop offset="1" stop-color="#15bbd0" stop-opacity="0"/></radialGradient>
+  </defs>
+  <path fill="url(#bg)" d="M0 0h800v700H0z"/>
+  <ellipse cx="490" cy="380" rx="320" ry="280" fill="url(#light)"/>
+  <g stroke="#29404b" stroke-width="1" opacity=".45">
+    <path d="M70 145 470 28l325 144M70 190 470 73l325 144M70 235 470 118l325 144M70 280 470 163l325 144"/>
+    <path d="m130 127 0 212m85-237v217m85-242v230m85-255v238m85-263v252m80-224v249m80-220v254m80-220v255"/>
+    <path d="m100 550 370-100 330 100M80 610l390-110 330 110M50 680l420-115 330 115M470 450v250M470 450 190 700M470 450 690 700M470 450 80 635M470 450 800 635"/>
+  </g>
+  <path d="m250 168 53-15 20 309-147 24zM607 181l43 16 97 299-147-35z" fill="url(#beam)"/>
+  <g stroke="#15bbd0" opacity=".4"><path d="m280 158-91 325M627 192l95 301"/><path d="m241 490 243-70 216 76"/></g>
+  <path d="m235 350 249-77 214 91v118l-214-66-249 66z" fill="#0b1722" stroke="#35515e"/>
+  <path d="m252 362 233-70 195 83v82l-195-58-233 68z" fill="#102c39"/>
+  <path d="m252 362 233-70 195 83M485 292v107" stroke="#15bbd0" stroke-width="3"/>
+  <path d="m293 381 145-45v46l-145 44z" fill="#184657"/>
+  <path d="m521 336 116 46v43l-116-37z" fill="#164254"/>
+  <path d="m235 482 249-66 214 66 41 30-255 84-290-84z" fill="url(#stage)" stroke="#4b7785"/>
+  <path d="m194 512 290 84 255-84v20l-255 91-290-91z" fill="#0e1a25"/>
+  <path d="m194 512 290 84 255-84" stroke="#15bbd0" stroke-width="3"/>
+  <path d="m272 498 212-54 155 49-155 49z" fill="#183341" stroke="#417383"/>
+  <path d="m370 491 113-30 82 27-82 30z" stroke="#15bbd0" stroke-width="2"/>
+  <g fill="#1c3440" stroke="#47717f">
+    <path d="m310 423 43-12 35 11-44 13z"/><path d="m310 423v28l34 11v-27m0 27 44-12v-28"/>
+    <path d="m551 416 42 15 33-10-42-16z"/><path d="m551 416v29l42 15v-29m0 29 33-10v-29"/>
+  </g>
+  <g stroke="#50cbda" stroke-width="2"><path d="m324 403 26-7v17l-26 7zM568 398l23 8v18l-23-8z" fill="#0a1821"/></g>
+  <path d="m141 542 15 5 21 85-25-8zM751 550l14-5-9 79-25 8z" fill="#132a35" stroke="#32515e"/>
+  <g fill="#15bbd0"><path d="m145 550 8 2 3 21-8-2zM751 555l8-2-3 20-8 2z"/><circle cx="283" cy="159" r="3"/><circle cx="627" cy="191" r="3"/></g>
+  <g stroke="#7e9ba6" opacity=".6"><path d="M695 100h25v25M695 593h25v-25M198 100h-25v25"/></g>
+  <text x="635" y="123" fill="#6f8e9b" font-family="Arial,sans-serif" font-size="8" letter-spacing="2">NE / ARENA CONCEPT</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <path fill="#171d28" d="M0 0h800v450H0z"/>
+  <path fill="#101923" d="M470 0h330v450H470z"/>
+  <path d="M470 0v450M530 145h175v175H530M617 120v225M505 232h225" fill="none" stroke="#293f50" stroke-width="2"/>
+  <path d="M555 170h125v125H555" fill="none" stroke="#15bbd0" stroke-width="3"/>
+  <g fill="#f4f5f7" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="68" letter-spacing="-2"><text x="48" y="282">YOUR NEXT</text><text x="48" y="352">ARENA.</text></g>
+  <text x="48" y="408" fill="#adb8c8" font-family="Arial,Helvetica,sans-serif" font-size="14" letter-spacing="3">NEBULA ESPORTS / EVENT PREVIEW</text>
+</svg>

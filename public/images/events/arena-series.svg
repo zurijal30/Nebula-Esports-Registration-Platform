@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs><linearGradient id="bg" x2="1" y2=".5"><stop stop-color="#10232b"/><stop offset="1" stop-color="#12617a"/></linearGradient></defs>
+  <path fill="url(#bg)" d="M0 0h800v450H0z"/>
+  <path d="M510-70h80L280 520h-80z" fill="#30d2d7" opacity=".23"/>
+  <path d="m595 100 200 275-250 165-200-275z" fill="none" stroke="#75e2eb" stroke-width="2" opacity=".7"/>
+  <text x="480" y="205" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="235" fill="#d5e9ee" opacity=".09">01</text>
+  <g fill="#f4f5f7" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="70" letter-spacing="-2"><text x="48" y="282">ENTER</text><text x="48" y="352">THE ARENA.</text></g>
+  <text x="48" y="408" fill="#bacbd1" font-family="Arial,Helvetica,sans-serif" font-size="14" letter-spacing="3">NEBULA ESPORTS / CONCEPT SERIES</text>
+</svg>
