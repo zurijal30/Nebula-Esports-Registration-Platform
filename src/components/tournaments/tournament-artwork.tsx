@@ -29,7 +29,7 @@ export function TournamentArtwork({ tournament, large = false }: { tournament: T
           if (image.src !== defaultTournamentImage.src) setFailedSource(image.src);
         }}
       />
-      <span className="demo-tag">{tournament.source === "live" ? "NEBULA EVENT" : "DEMO EVENT"}</span>
+      <span className="event-tag">NEBULA EVENT</span>
     </div>
   );
 }

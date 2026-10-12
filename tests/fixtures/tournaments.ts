@@ -1,8 +1,8 @@
-import type { Tournament } from "@/types/tournament";
+import type { Tournament } from "../../src/types/tournament";
 
 // Fictional examples only. Timestamps include Sri Lanka's UTC+05:30 offset.
 // Dates intentionally age with the real clock; registration statuses are derived.
-export const demoTournaments: readonly Tournament[] = [
+export const testTournaments: readonly Tournament[] = [
   {
     slug: "arena-series",
     title: "Arena Series",
@@ -97,7 +97,3 @@ export const demoTournaments: readonly Tournament[] = [
     ],
   },
 ];
-
-export function getTournament(slug: string) {
-  return demoTournaments.find((tournament) => tournament.slug === slug);
-}

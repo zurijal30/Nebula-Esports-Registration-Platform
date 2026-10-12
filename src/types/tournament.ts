@@ -25,8 +25,8 @@ export interface TournamentDisplayImage {
 }
 
 export interface Tournament {
-  /** Absent on legacy demo records. Live routes are always explicitly namespaced. */
-  source?: "live" | "demo";
+  /** Published database events use the explicit live route namespace. */
+  source?: "live";
   slug: string;
   title: string;
   description: string;

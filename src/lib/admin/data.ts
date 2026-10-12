@@ -3,10 +3,7 @@ import { requireAdmin } from "@/lib/auth/account";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { RegistrationRecord } from "@/lib/registrations/data";
 import type { ParticipantRole } from "@/lib/registrations/roster-rules";
-async function allRows<T>(query:{range:(from:number,to:number)=>PromiseLike<{data:unknown[]|null;error:unknown}>}) {
-  const data:T[]=[];
-  for(let offset=0;;offset+=500){const page=await query.range(offset,offset+499);if(page.error)return {data:[] as T[],error:true};data.push(...(page.data??[]) as T[]);if((page.data?.length??0)<500)return {data,error:false};}
-}
+import { allRows } from "@/lib/supabase/pagination";
 export interface AdminGame {id:string;slug:string;title:string;is_active:boolean;reference_type?:"solo"|"team"|null;banner_url?:string|null;banner_alt?:string|null;max_team_size?:number|null;available_roles?:ParticipantRole[]|null}
 export interface AdminCompetition {id:string;event_id:string;game_id:string;registration_type:"solo"|"team";starts_at:string;registration_opens_at:string;registration_closes_at:string;venue_override:string|null;registration_fee_lkr:number;status:"scheduled"|"cancelled"}
 export interface AdminEvent {id:string;slug:string;title:string;description:string;venue:string;starts_at:string;ends_at:string;status:"scheduled"|"cancelled";is_published:boolean;banner_url:string|null;banner_alt:string|null;event_games:AdminCompetition[]}

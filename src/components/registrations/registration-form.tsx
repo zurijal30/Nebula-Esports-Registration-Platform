@@ -33,7 +33,7 @@ export function RegistrationForm({ competitionId, type, email, initialPlayers, r
       {type === "team" && <div className="roster-panel"><h2>Team identity</h2><div className="registration-fields">
         <label>Team name <span aria-hidden="true">*</span><input name="teamName" required maxLength={120} value={teamName} onChange={(event) => setTeamName(event.target.value)} autoComplete="off" /></label>
       </div></div>}
-      <div className="roster-panel"><label className="clan-field">Clan Name <span className="field-optional">optional</span><input name="clanName" maxLength={120} value={clanName} onChange={e=>setClanName(e.target.value)} autoComplete="off"/></label></div>
+      <div className="roster-panel"><label className="clan-field"><span className="optional-field-label">Clan Name <span className="field-optional">Optional</span></span><input name="clanName" maxLength={120} value={clanName} onChange={e=>setClanName(e.target.value)} autoComplete="off"/></label></div>
       {type==="team"&&<div className="roster-summary-note" role="status"><strong>Registered: {players.length} / {rules.max}</strong><p>Maximum individuals: {rules.max} · Remaining: {Math.max(0,rules.max-players.length)} · Unused roles: {unused.length}</p><p>Captain, coach and substitutes all count. You do not need to fill every slot.</p>{players.length>rules.max&&<p className="form-error">This existing roster is preserved. Remove participants to meet the current maximum before saving.</p>}</div>}
       {players.map((player, index) => <div className="roster-panel" key={player.key}>
         <div className="roster-heading"><h2>{index === 0 ? (type === "team" ? "Captain" : "Your player details") : `Teammate ${index}`}</h2>

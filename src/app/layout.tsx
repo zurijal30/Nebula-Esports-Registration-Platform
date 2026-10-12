@@ -7,10 +7,10 @@ import { LiveEventRefresh } from "@/components/tournaments/live-refresh";
 
 export const metadata: Metadata = {
   title: { default: "Nebula Esports — Your Arena. Your Legacy.", template: "%s | Nebula Esports" },
-  description: "Discover Nebula Esports tournaments in Sri Lanka and register for solo and team competitions. Sample events are clearly labelled as demonstrations.",
+  description: "Discover published Nebula Esports tournaments in Sri Lanka and register for solo and team competitions.",
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const account = await getCurrentAccount();
-  return <html lang="en"><body><a className="skip-link" href="#main-content">Skip to content</a><Header signedIn={Boolean(account.user)} /><main id="main-content">{children}</main><Footer /><LiveEventRefresh/></body></html>;
+  return <html lang="en" data-scroll-behavior="smooth"><body><a className="skip-link" href="#main-content">Skip to content</a><Header signedIn={Boolean(account.user)} /><main id="main-content">{children}</main><Footer /><LiveEventRefresh/></body></html>;
 }

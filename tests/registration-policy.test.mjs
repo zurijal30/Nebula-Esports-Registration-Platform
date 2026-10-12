@@ -33,7 +33,7 @@ test('live data has an explicit route namespace and retains banner references', 
     { id: 'inactive', games: { title: 'Hidden game', is_active: false } },
   ] });
   assert.equal(tournamentPath(live), '/tournaments/live/arena-series');
-  assert.equal(tournamentPath({ ...live, source: undefined }), '/tournaments/arena-series');
+  assert.equal(tournamentPath({ ...live, source: undefined }), '/tournaments/live/arena-series');
   assert.equal(live.competitions.length, 1);
   assert.equal(live.competitions[0].registrationFeeLkr, 1500);
   assert.equal(live.competitions[0].competitionStatus, 'cancelled');

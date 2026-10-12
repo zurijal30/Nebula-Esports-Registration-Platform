@@ -4,7 +4,7 @@ import Image from "next/image";
 import type { AdminGame } from "@/lib/admin/data";
 import { saveGameAction, type AdminFormState } from "@/lib/admin/actions";
 import { SubmitButton } from "@/components/auth/submit-button";
-import { GAME_BANNER_FALLBACK } from "@/lib/game-image";
+import { GAME_BANNER_FALLBACK, MAX_BANNER_BYTES } from "@/lib/game-image";
 import { PARTICIPANT_ROLES, roleLabel, type ParticipantRole } from "@/lib/registrations/roster-rules";
 export function GameEditor({game,existingRosters=[]}:{game?:AdminGame;existingRosters?:{size:number;roles:(string|null)[]}[]}) {
   const [preview,setPreview]=useState<string|null>(null),[fileError,setFileError]=useState(""),[remove,setRemove]=useState(false);
@@ -33,9 +33,9 @@ export function GameEditor({game,existingRosters=[]}:{game?:AdminGame;existingRo
     <div className="admin-banner-preview"><Image fill unoptimized src={remove?GAME_BANNER_FALLBACK:preview??game?.banner_url??GAME_BANNER_FALLBACK} alt={preview?"Selected game banner preview":game?.banner_alt??"Game banner preview"} sizes="(max-width:760px) 100vw, 600px"/></div>
     <label className="form-field">Game Banner<input type="file" name="banner" accept="image/jpeg,image/png,image/webp" disabled={pending||remove} onChange={e=>{
       const file=e.target.files?.[0];setFileError("");
-      if(file&&(!["image/jpeg","image/png","image/webp"].includes(file.type)||file.size>5*1024*1024)){e.target.value="";setPreview(null);setFileError("Choose JPG, PNG or WebP up to 5 MB.");return;}
+      if(file&&(!["image/jpeg","image/png","image/webp"].includes(file.type)||file.size>MAX_BANNER_BYTES)){e.target.value="";setPreview(null);setFileError("Choose JPG, PNG or WebP up to 4 MB.");return;}
       setPreview(file?URL.createObjectURL(file):null);
-    }}/><span className="field-help">Optional · JPG, PNG or WebP · maximum 5 MB / 24 megapixels. A wide 16:9 image works best. Leave blank to keep the current image.</span></label>
+    }}/><span className="field-help">Optional · JPG, PNG or WebP · maximum 4 MB / 24 megapixels. A wide 16:9 image works best. Leave blank to keep the current image.</span></label>
     {game?.banner_url&&<label className="confirmation-check"><input type="checkbox" name="remove_banner" value="yes" checked={remove} disabled={pending} onChange={e=>{setRemove(e.target.checked);setPreview(null);}}/><span>Remove the game banner and use the fallback image.</span></label>}
     {(fileError||state.error)&&<p role="alert" className="form-message form-error">{fileError||state.error}</p>}
     {state.success&&<p role="status" className="form-message form-success">{state.success}</p>}

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/account";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { adminError, colomboInputToIso, slugify, validateCompetition, validateEvent } from "./policy";
-import { prepareBanner } from "./banner";
+import { MAX_BANNER_BYTES, prepareBanner } from "./banner";
 import { exactGameConfirmation, validateGameReference } from "./game-policy";
 import { gameBannerError, type GameBannerStage } from "./game-banner-error";
 import { PARTICIPANT_ROLES } from "@/lib/registrations/roster-rules";
@@ -52,8 +52,8 @@ export async function saveGameAction(_state:AdminFormState,form:FormData):Promis
   if(remove&&file instanceof File&&file.size)return {error:"Choose either a replacement image or removal."};
   let output:Buffer|undefined;
   if(file instanceof File&&file.size){
-    if(file.size>5*1024*1024)return {error:"Choose an image no larger than 5 MB."};
-    try{output=await prepareBanner(new Uint8Array(await file.arrayBuffer()),file.type);}catch{return {error:"Choose a valid JPEG, PNG or WebP up to 5 MB and 24 megapixels."};}
+    if(file.size>MAX_BANNER_BYTES)return {error:"Choose an image no larger than 4 MB."};
+    try{output=await prepareBanner(new Uint8Array(await file.arrayBuffer()),file.type);}catch{return {error:"Choose a valid JPEG, PNG or WebP up to 4 MB and 24 megapixels."};}
   }
   if(id&&text(form,"is_active")==="false"){const {data:existing}=await c.from("games").select("is_active").eq("id",id).maybeSingle();if(existing?.is_active&&text(form,"confirm")!=="yes")return {error:"Confirm hiding this game."};}
   let gameId=id;
@@ -146,7 +146,8 @@ export async function saveBannerAction(_state:AdminFormState,form:FormData):Prom
     } else {
       const file=form.get("banner"),alt=text(form,"alt");if(!(file instanceof File)||!file.size)return {error:"Choose an image."};
       if(!alt||alt.length>240)return {error:"Describe the banner in up to 240 characters."};
-      let output:Buffer;try{output=await prepareBanner(new Uint8Array(await file.arrayBuffer()),file.type);}catch{return {error:"Choose a valid JPEG, PNG or WebP up to 5 MB and 24 megapixels."};}
+      if(file.size>MAX_BANNER_BYTES)return {error:"Choose an image no larger than 4 MB."};
+      let output:Buffer;try{output=await prepareBanner(new Uint8Array(await file.arrayBuffer()),file.type);}catch{return {error:"Choose a valid JPEG, PNG or WebP up to 4 MB and 24 megapixels."};}
       const {data:asset,error:reserveError}=await c.rpc("admin_reserve_banner",{p_event:eventId}).single<{id:string;path:string}>();if(reserveError||!asset)return {error:adminError(reserveError?.code,reserveError?.message)};
       const {error:uploadError}=await c.storage.from("nebula-event-banners").upload(asset.path,output,{contentType:"image/webp",upsert:false,cacheControl:"0"});
       if(uploadError)return {error:"Upload failed. The existing banner is unchanged. Retry or check Storage setup."};

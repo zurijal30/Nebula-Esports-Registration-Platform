@@ -17,5 +17,5 @@ export function mapLiveEvent(row: LiveEventRow): Tournament {
   };
 }
 export function tournamentPath(tournament: Tournament) {
-  return tournament.source === "live" ? `/tournaments/live/${tournament.slug}` : `/tournaments/${tournament.slug}`;
+  return `/tournaments/live/${tournament.slug}`;
 }

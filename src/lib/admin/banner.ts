@@ -1,7 +1,8 @@
 import sharp from "sharp";
-export const MAX_BANNER_BYTES = 5 * 1024 * 1024;
+import { MAX_BANNER_BYTES } from "../game-image.ts";
+export { MAX_BANNER_BYTES } from "../game-image.ts";
 export async function prepareBanner(bytes: Uint8Array, mime: string) {
-  if (!bytes.length || bytes.length>MAX_BANNER_BYTES) throw new Error("Choose an image no larger than 5 MB.");
+  if (!bytes.length || bytes.length>MAX_BANNER_BYTES) throw new Error("Choose an image no larger than 4 MB.");
   const expected: Record<string,string> = {"image/jpeg":"jpeg","image/png":"png","image/webp":"webp"};
   if (!expected[mime]) throw new Error("Choose a JPEG, PNG or WebP image.");
   const decoder = sharp(bytes, {limitInputPixels:24_000_000,failOn:"error",animated:false});

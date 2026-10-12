@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { createClient } from '@supabase/supabase-js';
 import { getSupabaseConfig } from '../src/lib/auth/config.ts';
+import { effectiveRosterRules } from '../src/lib/registrations/roster-rules.ts';
 try { process.loadEnvFile('.env.test.local'); } catch { /* environment supplied */ }
 const required = ['NEXT_PUBLIC_SUPABASE_URL','NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY','PHASE4_TEST_EMAIL','PHASE4_TEST_PASSWORD','PHASE4_TEST_SOLO_ID','PHASE4_TEST_TEAM_ID'];
 if (process.env.PHASE4_ALLOW_TEST_WRITES !== 'YES_DISPOSABLE_PROJECT' || required.some((key) => !process.env[key])) {
@@ -16,13 +17,18 @@ for (const c of [a,b]) {
   const { error } = await c.auth.signInWithPassword({ email:process.env.PHASE4_TEST_EMAIL, password:process.env.PHASE4_TEST_PASSWORD });
   assert.equal(error,null,'Disposable test account must be confirmed and sign-in must succeed');
 }
-const roster = (n) => Array.from({length:n}, (_,i) => ({fullName:`Integration Player ${i+1}`, ign:`TestIGN${i+1}`, gameId:`TEST-${i+1}`,phone:'+94 711111111'}));
+const roster = (n,roles) => Array.from({length:n}, (_,i) => ({fullName:`Integration Player ${i+1}`, ign:`TestIGN${i+1}`, gameId:`TEST-${i+1}`,phone:'+94 711111111',...(roles?{role:roles[i]}:{})}));
 const save = (c,id,players,name=null,registration=null) => c.rpc('save_registration',{p_competition:id,p_players:players,p_team:name,p_clan:null,p_registration:registration});
 const created = new Set();
 try {
   const { error: schemaError } = await a.from('registrations').select('id,registration_type,source').limit(0);
-  assert.equal(schemaError,null,'Apply both migrations before running live tests');
+  assert.equal(schemaError,null,'Apply the migrations through Phase 6.5 before running live tests');
   const solo = process.env.PHASE4_TEST_SOLO_ID, team = process.env.PHASE4_TEST_TEAM_ID;
+  const settings = await a.from('event_games').select('registration_type,games(max_team_size,available_roles)').eq('id',team).single();
+  assert.equal(settings.error,null,'Team game rules must be readable');assert.equal(settings.data.registration_type,'team');
+  const rules=effectiveRosterRules({maxTeamSize:settings.data.games.max_team_size,availableRoles:settings.data.games.available_roles});
+  const firstPlayer=rules.roles.find(role=>role.startsWith('player_'));assert.ok(firstPlayer,'Captain needs a Player slot');
+  const slots=[firstPlayer,...rules.roles.filter(role=>role!==firstPlayer)];const teamSize=Math.min(rules.max,slots.length);
   for (const id of [solo,team]) {
     const { data,error } = await a.from('registrations').select('id').eq('event_game_id',id).eq('status','active');
     assert.equal(error,null); assert.equal(data.length,0,'Use fresh test competitions with no active entries for the test owner');
@@ -34,14 +40,17 @@ try {
   const failedEdit = await save(a,solo,[{...roster(1)[0],phone:''}],null,first.data); assert.ok(failedEdit.error);
   const saved = await a.from('registration_players').select('ign').eq('registration_id',first.data); assert.equal(saved.data[0].ign,'UpdatedIGN');
   console.log('PASS live solo save/edit and failed-edit atomicity');
-  const race = await Promise.all([save(a,team,roster(9),'Integration Team'),save(b,team,roster(9),'Integration Team')]);
+  const race = await Promise.all([save(a,team,roster(1,slots),'Integration Team'),save(b,team,roster(1,slots),'Integration Team')]);
   for (const result of race) if (!result.error) created.add(result.data);
   assert.equal(race.filter((r)=>!r.error).length,1); assert.equal(race.find((r)=>r.error).error.code,'23505');
   const teamId = race.find((r)=>!r.error).data;
-  assert.equal((await save(a,team,roster(12),'Edited Team',teamId)).error,null);
+  assert.equal((await save(a,team,roster(teamSize,slots),'Edited Team',teamId)).error,null);
   const members = await a.from('registration_players').select('player_order,is_captain').eq('registration_id',teamId);
-  assert.equal(members.data.length,12); assert.equal(members.data.filter((p)=>p.is_captain).length,1);
-  console.log('PASS live two-session race protection and 12-player team edit');
+  assert.equal(members.data.length,teamSize); assert.equal(members.data.filter((p)=>p.is_captain).length,1);
+  // Bound the negative fixture by actual role capacity, even if an admin saved
+  // a much larger numeric maximum. Extra participants must fail either rule.
+  const overLimit=await save(a,team,roster(teamSize+1,slots),'Invalid Team',teamId);assert.ok(overLimit.error);
+  console.log('PASS live two-session race protection and configured-role team edit');
   assert.equal((await a.rpc('cancel_registration',{p_registration:first.data})).error,null); created.delete(first.data);
   assert.ok((await save(a,solo,roster(1),null,first.data)).error);
   const again = await save(a,solo,roster(1)); assert.equal(again.error,null); assert.notEqual(again.data,first.data); created.add(again.data);
@@ -49,7 +58,7 @@ try {
   if (process.env.PHASE4_OTHER_EMAIL && process.env.PHASE4_OTHER_PASSWORD) {
     const other = client(); assert.equal((await other.auth.signInWithPassword({email:process.env.PHASE4_OTHER_EMAIL,password:process.env.PHASE4_OTHER_PASSWORD})).error,null);
     const hidden = await other.from('registrations').select('id').eq('id',teamId); assert.equal(hidden.data.length,0);
-    assert.ok((await save(other,team,roster(1),'Stolen',teamId)).error);
+    assert.ok((await save(other,team,roster(1,slots),'Stolen',teamId)).error);
     assert.ok((await other.rpc('cancel_registration',{p_registration:teamId})).error);
     await other.auth.signOut({scope:'local'}); console.log('PASS live other-owner denial');
   } else console.log('SKIP live other-owner test: second disposable player not configured');

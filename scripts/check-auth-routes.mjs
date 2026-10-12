@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 
 const origin = "http://localhost:3000";
-for (const path of ["/sign-in", "/sign-up", "/forgot-password", "/tournaments", "/tournaments/arena-series"]) {
+for (const path of ["/sign-in", "/sign-up", "/forgot-password", "/tournaments", "/"]) {
   const response = await fetch(`${origin}${path}`, { redirect: "manual" });
   assert.equal(response.status, 200, path);
   console.log(`${path}: 200`);

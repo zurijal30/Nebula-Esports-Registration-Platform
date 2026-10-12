@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { getCompetitionStatus, getTournamentStatus, filterTournaments } from "../src/lib/tournament-status.ts";
 import { formatDateTime, formatFee } from "../src/lib/tournament-format.ts";
-import { demoTournaments } from "../src/data/tournaments.ts";
+import { testTournaments as demoTournaments } from "./fixtures/tournaments.ts";
 
 const event = demoTournaments[0];
 const competition = event.competitions[0];
@@ -59,7 +59,7 @@ test("dates use Colombo even when UTC timestamps cross midnight", () => {
   assert.equal(formatFee(2500, "team"), "LKR 2,500 / team");
 });
 
-test("demo routes are unique, windows ordered and competitions inside their events", () => {
+test("test fixture slugs are unique, windows ordered and competitions inside their events", () => {
   assert.equal(new Set(demoTournaments.map((item) => item.slug)).size, demoTournaments.length);
   for (const tournament of demoTournaments) {
     assert.ok(Date.parse(tournament.startsAt) < Date.parse(tournament.endsAt));

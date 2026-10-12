@@ -21,7 +21,7 @@ test('banner processing fully decodes JPEG, PNG and WebP and rejects spoofed/ove
     const output=await prepareBanner(bytes,mime);const meta=await sharp(output).metadata();assert.equal(meta.format,'webp');assert.equal(meta.width,80);assert.equal(meta.exif,undefined);
     await assert.rejects(prepareBanner(bytes,mime==='image/png'?'image/jpeg':'image/png'));
   }
-  await assert.rejects(prepareBanner(new Uint8Array(MAX_BANNER_BYTES+1),'image/png'),/5 MB/);
+  await assert.rejects(prepareBanner(new Uint8Array(MAX_BANNER_BYTES+1),'image/png'),/4 MB/);
   await assert.rejects(prepareBanner(Buffer.from('<svg><script>alert(1)</script></svg>'),'image/png'));
   await assert.rejects(prepareBanner(Buffer.from('broken'),'image/webp'));
   await assert.rejects(prepareBanner(Buffer.from('broken'),'image/svg+xml'));

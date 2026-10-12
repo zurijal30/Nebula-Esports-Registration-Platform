@@ -20,7 +20,7 @@ export function TournamentCard({ tournament, now }: { tournament: Tournament; no
         <div className="game-tags">{games.map((game) => <span key={game}>{game}</span>)}</div>
         <Link className="card-link" href={tournamentPath(tournament)}>
           View Tournament <ArrowUpRight size={18} aria-hidden="true" />
-          <span className="sr-only">: {tournament.title}{tournament.source !== "live" && ", demonstration"}</span>
+          <span className="sr-only">: {tournament.title}</span>
         </Link>
       </div>
     </article>
